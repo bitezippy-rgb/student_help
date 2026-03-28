@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage Orders</h2>
+<a href="{{ url_for('admin_dashboard') }}" class="btn" style="margin-bottom:15px;">&larr; Back to Dashboard</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Update / Upload File</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>#{{ order.id }}</td>
+        <td>{{ order.user_name }}</td>
+        <td>{{ order.service_type }}<br><small>₹{{ order.price }}</small></td>
+        <td>{{ order.status }}</td>
+        <td>
+            <form method="POST" enctype="multipart/form-data" style="display:flex; gap:10px; align-items:center;">
+                <input type="hidden" name="order_id" value="{{ order.id }}">
+                <select name="status" required>
+                    <option value="Payment Pending" {% if order.status == 'Payment Pending' %}selected{% endif %}>Payment Pending</option>
+                    <option value="Paid" {% if order.status == 'Paid' %}selected{% endif %}>Paid</option>
+                    <option value="In Progress" {% if order.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                </select>
+                <input type="file" name="completed_file" style="width: 150px;">
+                <button type="submit" class="btn btn-success" style="padding: 5px 10px;">Update</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

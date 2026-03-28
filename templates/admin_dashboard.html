@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Dashboard</h2><br>
+<div class="admin-stats">
+    <div class="stat-box">👥 Total Users<br>{{ u_count }}</div>
+    <div class="stat-box">📦 Total Orders<br>{{ o_count }}</div>
+    <div class="stat-box">💰 Total Revenue<br>₹{{ rev }}</div>
+</div>
+
+<a href="{{ url_for('admin_orders') }}" class="btn">Manage Orders</a>
+<a href="{{ url_for('admin_users') }}" class="btn">Manage Users</a>
+{% endblock %}

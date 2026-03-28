@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>My Active Orders</h2>
+    <!-- FIXED: Changed 'index' to 'home' -->
+    <a href="{{ url_for('home') }}" class="btn btn-success" style="padding: 8px 16px; font-size: 0.9rem;">+ New Order</a>
+</div>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Service Details</th>
+            <th>Total Paid</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td style="font-weight: 600; color: var(--primary);">#ORD-{{ order.id }}</td>
+            <td><strong>{{ order.service_type }}</strong><br><small style="color: var(--text-muted);">{{ order.created_at[:10] }}</small></td>
+            <td style="font-weight: 500;">₹{{ order.price }}</td>
+            <td>
+                <!-- Dynamic Status Badges -->
+                {% if order.status == 'Payment Pending' %}
+                    <span class="badge bg-warning">Payment Pending</span>
+                {% elif order.status == 'In Progress' %}
+                    <span class="badge bg-info">In Progress</span>
+                {% elif order.status == 'Delivered' %}
+                    <span class="badge bg-success">Delivered</span>
+                {% else %}
+                    <span class="badge" style="background: #e2e8f0; color: #475569;">{{ order.status }}</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if order.status == 'Delivered' and order.completed_file %}
+                    <a href="{{ url_for('start_download', order_id=order.id) }}" class="btn btn-success" style="padding: 8px 16px; font-size: 0.85rem; border-radius: 50px;">⬇ Download</a>
+                {% else %}
+                    <span style="color: var(--text-muted); font-size: 0.9rem; font-style: italic;">Processing...</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <!-- FIXED: Changed 'index' to 'home' in the empty state text -->
+            <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                You haven't placed any orders yet. <a href="{{ url_for('home') }}" style="color: var(--primary);">Order now!</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

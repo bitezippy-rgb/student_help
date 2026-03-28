@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="hero">
+    <h1>Supercharge Your <span>Academic Success</span></h1>
+    <p>Get premium, high-quality assignments, presentations, and projects delivered on time by experts.</p>
+</div>
+
+<div class="card-grid">
+    {% for service, price in services.items() %}
+    <div class="card">
+        <h3>{{ service }}</h3>
+        <div class="price">₹{{ price }} <span>/ order</span></div>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">High-quality, plagiarism-free delivery tailored to your needs.</p>
+        
+        <a href="{{ url_for('start_order', service=service) }}" class="btn">Order Now &rarr;</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

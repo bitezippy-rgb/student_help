@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style> body { text-align:center; padding-top: 50px; background:#000; color:#fff; } </style>
+</head>
+<body>
+    <h2>Video Ad</h2>
+    <p>Please wait <span id="timer">6</span> seconds...</p>
+    
+    <!-- Dummy Video Player Box -->
+    <div style="width: 80%; max-width: 600px; height: 350px; background: #333; margin: 20px auto; display: flex; align-items: center; justify-content: center;">
+        <h3 style="color:#888;">[ Video Playing... ]</h3>
+    </div>
+
+    <script>
+        let timeLeft = 6;
+        let timerEl = document.getElementById('timer');
+        let interval = setInterval(function() {
+            timeLeft--;
+            timerEl.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                window.location.href = "{{ next_url|safe }}";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

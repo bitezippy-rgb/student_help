@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-box">
+    <h2>Order: {{ service }}</h2>
+    <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px;">Base Price: <strong>₹<span id="basePrice">{{ base_price }}</span></strong></p>
+    
+    <form action="{{ url_for('submit_order') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="service" value="{{ service }}">
+        
+        <div class="form-group">
+            <label>Detailed Requirements</label>
+            <textarea name="description" rows="5" required placeholder="Describe your topic, deadline, or special instructions here..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Upload Reference Material (Optional)</label>
+            <input type="file" name="req_file">
+        </div>
+        
+        <!-- Custom styled checkbox -->
+        <label class="checkbox-wrapper form-group">
+            <input type="checkbox" name="fast_delivery" id="fastDel" onchange="updatePrice()">
+            <span style="font-weight: 500;">I need Fast Delivery (+₹100)</span>
+        </label>
+        
+        <div style="background: var(--light); padding: 15px; border-radius: 10px; text-align: center; margin: 25px 0;">
+            <span style="font-size: 1.1rem; color: var(--text-muted);">Total Amount:</span>
+            <h3 style="font-size: 2rem; color: var(--dark); margin:0;">₹<span id="totalPrice">{{ base_price }}</span></h3>
+        </div>
+
+        <button type="submit" class="btn btn-success" style="width: 100%; font-size: 1.1rem; padding: 15px;">Confirm & Submit Order</button>
+    </form>
+</div>
+
+<script>
+    function updatePrice() {
+        let base = parseInt(document.getElementById('basePrice').innerText);
+        let fast = document.getElementById('fastDel').checked ? 100 : 0;
+        document.getElementById('totalPrice').innerText = base + fast;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Service Platform</title>
+    <!-- Modern Font & CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Advanced Navigation -->
+    <nav>
+        <h2>🎓 StudentServices</h2>
+        <div>
+            <!-- FIXED: Changed 'index' to 'home' -->
+            <a href="{{ url_for('home') }}">Home</a>
+            
+            {% if session.get('user_id') %}
+                {% if session.get('role') == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('dashboard') }}">My Dashboard</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout ({{ session.get('user_name') }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn" style="padding: 8px 16px; border-radius: 50px; color:white;">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Top Banner Ad -->
+    <div class="ad-banner">Top Banner Advertisement</div>
+
+    <!-- Main Container -->
+    <div class="container animate-fade-in">
+        
+        <!-- Clean Error/Success Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div style="margin-bottom: 25px;">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Page Content Injected Here -->
+        {% block content %}{% endblock %}
+
+    </div>
+
+    <!-- Bottom Banner Ad -->
+    <div class="ad-banner">Bottom Banner Advertisement</div>
+
+    <!-- Animated WhatsApp Button -->
+    <a href="https://wa.me/917377412114" class="wa-float" target="_blank">💬</a>
+
+    <!-- BUG-FREE JAVASCRIPT FOR BUTTON RIPPLE EFFECT -->
+    <script>
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Get exact coordinates of the button
+                let rect = this.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                
+                // Create ripple element
+                let ripples = document.createElement('span');
+                ripples.style.left = x + 'px';
+                ripples.style.top = y + 'px';
+                ripples.classList.add('ripple');
+                
+                this.appendChild(ripples);
+                
+                // Remove ripple after animation finishes
+                setTimeout(() => { 
+                    ripples.remove(); 
+                }, 600);
+            });
+        });
+    </script>
+</body>
+</html>

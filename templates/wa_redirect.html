@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting to WhatsApp...</title>
+    <style>
+        body { text-align: center; padding: 50px; font-family: Arial; }
+        .loader { border: 8px solid #f3f3f3; border-top: 8px solid #25d366; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <h2>Order Submitted Successfully!</h2>
+    <p>Redirecting you to WhatsApp to complete payment...</p>
+    <p>If not redirected, <a href="{{ wa_url }}">Click Here</a>.</p>
+    
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ wa_url|safe }}";
+        }, 2000);
+    </script>
+</body>
+</html>
