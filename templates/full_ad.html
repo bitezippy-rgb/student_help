@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
-<body class="ad-full-page">
-    <h1>SPONSORED ADVERTISEMENT</h1>
-    <p>Get 50% off on premium domains today!</p><br>
-    <!-- Requires user action to proceed -->
-    <a href="{{ next_url }}" class="btn">Skip Ad & Continue</a>
+<body class="ad-full-page" style="background: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+    
+    <h1 style="color: var(--primary);">Special Partner Offer! 🎁</h1>
+    <p style="color: var(--text-muted); margin-bottom: 30px;">Please check out our sponsor to support our free platform.</p>
+    
+    <!-- REPLACE THE HREF WITH YOUR ADSTERRA DIRECT LINK -->
+    <a href="https://www.profitablecpmratenetwork.com/bca34v5me?key=dba8e61c40258f7c2e95467f5b89656f" target="_blank" 
+   rel="noopener noreferrer"
+   onclick="setTimeout(function(){ window.location.href='{{ next_url }}'; }, 800);"
+   class="btn" style="padding: 15px 30px; font-size: 1.2rem;">
+    View Offer & Continue ➔
+</a>
+    <br><br>
+    <p style="font-size: 0.85rem; color: #94a3b8;">Clicking the button will open our sponsor and redirect you to your destination.</p>
 </body>
 </html>
